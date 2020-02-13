@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: day4asrpod27
+    x: asrjenkins
+  name: day4asrpod27
+  namespace: arajasu
+spec:
+  containers:
+  - image: arajasu/day4webapp:latest
+    name: day4asrpod27
+    ports:
+     - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: day4asrjsvc
+  name: day4asrjsvc
+  namespace: arajasu
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+   x: asrjenkins # same as pod label 
+  type: NodePort
+status:
+  loadBalancer: {}
